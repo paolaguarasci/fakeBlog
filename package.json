@@ -1,0 +1,15 @@
+{
+  "name": "fakeblog",
+  "version": "0.0.1",
+  "description": "A Fake cmdline Blog with CRUD and registration user",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Paola Guarasci",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "massive": "^5.4.0"
+  }
+}
