@@ -21,7 +21,6 @@ const db = {
     } catch (e) {
       console.error("Errore nel fare la query: ", e.message);
       await client.end()
-      return false;
     }
   },
   read: async (q) => {

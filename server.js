@@ -36,6 +36,21 @@ app.get('/:user', function (req, res) {
     ).catch(err => console.error(err));
 });
 
+app.put('/:user/', async function (req, res) {
+  let query = {
+    user: req.params.user,
+    title: req.body.post.title,
+    post: req.body.post.body
+  }
+  let id = await db.read(`SELECT users_id FROM users WHERE nickname = '${query.user}'`)
+  id = id.rows[0].users_id
+  console.log(query.title, query.post, id)
+  let r = await db.insert(`INSERT INTO posts VALUES('${query.title}', '${query.post}', ${id});`)
+  if (r) {
+    res.send("Inserimento ok");
+  }
+});
+
 app.listen(4000, function () {
   console.log('Server is running.. on Port 4000');
 });

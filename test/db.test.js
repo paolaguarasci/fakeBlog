@@ -2,12 +2,12 @@ const db = require('../db');
 
 describe("Preliminari", () => {
   test("Funzione importata corretamente", () => {
-    return db('SELECT * FROM student').then((res) => {
+    return db.read('SELECT * FROM users').then((res) => {
       expect(res).not.toBeUndefined();
     });
   });
   test("Return an array", () => {
-    return db('SELECT * FROM student').then((res) => {
+    return db.read('SELECT * FROM users').then((res) => {
       expect(res.rows instanceof Array).toBe(true);
     });
   });
@@ -15,11 +15,11 @@ describe("Preliminari", () => {
 
 describe("CRUD", () => {
   test("Add row", () => {
-    let query = "INSERT INTO asd values(7, 'Ciccio Pasticcio', 44444);";
+    let query = "INSERT INTO users values(7, 'Ciccio Pasticcio', 'mia@email.com', 'password');";
 
-    db(query).then((res) => {
+    db.insert(query).then((res) => {
       try {
-        expect(res.rowCount > 0).toBe(true);
+        expect(res).toBe(true);
       } catch (e) {
         console.log(e);
         return false;
