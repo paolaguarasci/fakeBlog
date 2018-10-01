@@ -15,7 +15,7 @@ describe("Preliminari", () => {
 
 describe("CRUD", () => {
   test("Add row", () => {
-    let query = "INSERT INTO users values(7, 'Ciccio Pasticcio', 'mia@email.com', 'password');";
+    let query = "INSERT INTO users values(8, 'Ciccio Pasticcio', 'mia@email.com', 'password');";
 
     db.insert(query).then((res) => {
       try {
