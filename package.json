@@ -4,15 +4,27 @@
   "description": "A Fake cmdline Blog with CRUD and registration user",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "snyk test && jest"
   },
   "author": "Paola Guarasci",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^6.0.0",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "knex": "^0.15.2",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "snyk": "^1.99.1"
   }
 }

@@ -16,7 +16,6 @@ describe("Preliminari", () => {
 describe("CRUD", () => {
   test("Add row", () => {
     let query = "INSERT INTO users values(8, 'Ciccio Pasticcio', 'mia@email.com', 'password');";
-
     db.insert(query).then((res) => {
       try {
         expect(res).toBe(true);
@@ -25,42 +24,6 @@ describe("CRUD", () => {
         return false;
       }
     }).catch(err => console.error(err.message));
-
   });
-  // test("Add rows", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
-  // test("Read row", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
-  // test("Read row", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
-  // test("Update row", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
-  // test("Update rows", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
-  // test("Delete row", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
-  // test("Delete row", () => {
-  //   return db('SELECT * FROM student').then((res) => {
-  //     expect(res).not.toBeUndefined();
-  //   });
-  // });
 });
 

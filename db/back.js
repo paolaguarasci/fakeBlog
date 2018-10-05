@@ -27,8 +27,23 @@ class db {
       return await raw(raw__query);
     };
 
+    this.findOne = async (key) => {
+      console.log(key)
+      const raw__query = `SELECT * FROM users WHERE email='${key.Email}' AND password='${key.Pass}';`;
+      console.log("Full Query", raw__query);
+      const user = await raw(raw__query);
+      // if (!user) return new Error('User not found');
+      // console.log('id', user[0].id);
+      return user[0];
+    };
+
     this.post = async (user) => {
-      const raw__query = `SELECT title, body, posts.id FROM posts JOIN users on (posts.author = users.id) WHERE users.nickname = '${user}'`;
+      const raw__query = `SELECT title, body, posts.id FROM posts JOIN users on (posts.author = users.id) WHERE users.id = '${user}'`;
+      console.log("Full Query", raw__query);
+      return await raw(raw__query);
+    };
+    this.latest20Post = async (user) => {
+      const raw__query = `SELECT title, body, posts.id FROM posts ORDER BY id DESC LIMIT 20`;
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };
