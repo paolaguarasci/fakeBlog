@@ -17,3 +17,6 @@ The main components are: **Node**, **Express** (with session and router) and **P
 - make editable user info
 - make interface more usable 🤔
 - make registration.html
+
+### Maybe one day...
+- Security policy
