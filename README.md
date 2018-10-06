@@ -9,9 +9,10 @@ The main components are: **Node**, **Express** (with session and router) and **P
 - ✅ read latest 20 post in homepage
 - ✅ login using form http://localhost:4000/login
 - ✅ add post as logged user at http://localhost:4000/addPost
-- ✅ make modPost.html for update posts
-- ✅ make profile.html with only users logged post and info
-- ✅ make interface with some button (delete, update...) VERY minimal
+- ✅ update posts as logged user
+- ✅ view my post as logged user
+- ✅ click buttons to delete or mod post
+- ✅ signup into platform using registration form
 
 ### TODO
 - make editable user info
