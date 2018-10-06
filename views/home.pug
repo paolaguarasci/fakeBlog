@@ -1,7 +1,20 @@
 extends layout.pug
+
 block body
+	#user
+		if user != undefined
+			p= "Ciao " + user.email
+			a(href="/logout") logout
+		else
+			a(href="/login") login
+
 	ul
 		each post in posts
-				a(href= '/modpost/'+post.id )= post.title
+				hr
+				h3= post.title
 				p= post.body
+				p
 					em= post.author
+				if user != undefined && user.email == post.author
+					a(href="/modpost/" + post.id) ↪️
+					a(href="/delete/" + post.id) ❌

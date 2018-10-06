@@ -31,7 +31,11 @@ class db {
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };
-
+    this.getUserInfo = async (email) => {
+      const raw__query = `SELECT * FROM users WHERE email = '${email}'`;
+      console.log("Full Query", raw__query);
+      return await raw(raw__query);
+    };
     this.findOne = async (key) => {
       console.log(key)
       const raw__query = `SELECT * FROM users WHERE email='${key.Email}' AND password='${key.Pass}';`;
@@ -44,6 +48,11 @@ class db {
 
     this.post = async (user) => {
       const raw__query = `SELECT title, body, posts.id FROM posts JOIN users on (posts.author = users.id) WHERE users.id = '${user}'`;
+      console.log("Full Query", raw__query);
+      return await raw(raw__query);
+    };
+    this.getUserPost = async (email) => {
+      const raw__query = `SELECT title, body, posts.id FROM posts JOIN users on (posts.author = users.id) WHERE users.email = '${email}'`;
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };

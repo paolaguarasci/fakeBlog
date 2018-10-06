@@ -1,0 +1,16 @@
+extends layout.pug
+block body
+  if user != undefined
+    h1= "Profilo di " + user.nickname + ", " + user.email
+    p
+      a(href="/addPost") Add Post
+    .posts
+      each post in posts
+        .post__header
+          h3= post.title
+          a(href="/modpost/" + post.id) ↪️
+          a(href="/delete/" + post.id) ❌
+        .post__body
+          p= post.body
+  else
+    a(href="/login") login

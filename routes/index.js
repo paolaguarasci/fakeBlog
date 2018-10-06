@@ -3,14 +3,13 @@ const express = require('express');
 const router = express.Router();
 const data = new db();
 const session = require('express-session');
-const path = require("path");
-
+const request = require('request');
 
 
 router.use('/api', require('./api'))
 // router.use('/cars', require('./cars'))
 
-router.get('/', async function (req, res) {
+router.get('/', async function (req, res, next) {
   let return__value = await data.latest20Post();
   // return_value.forEach(post => { post.author = await data.getEmail(post.author); });
 
@@ -23,16 +22,16 @@ router.get('/', async function (req, res) {
       console.log('Error: user not found')
     }
   }
-  console.log(return__value);
-  res.render('home', { posts: return__value });
+  console.log("Utente in sessione: ", req.session.user);
+  res.render('home', { posts: return__value, user: req.session.user });
 })
-router.get('/login', function (req, res) {
+router.get('/login', function (req, res, next) {
   res.render('login');
 })
-router.get('/addPost', isLoggedIn, function (req, res) {
+router.get('/addPost', isLoggedIn, function (req, res, next) {
   res.render('addPost');
 })
-router.get('/modPost/:id', isLoggedIn, async function (req, res) {
+router.get('/modPost/:id', isLoggedIn, async function (req, res, next) {
   const p = await data.singlePost(req.params.id);
   const m = await data.getEmail(p[0].author);
   let post = {
@@ -45,7 +44,7 @@ router.get('/modPost/:id', isLoggedIn, async function (req, res) {
   console.log("post in get modpost", post);
   res.render('modPost', post);
 })
-router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res) {
+router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res, next) {
   // const post = await data.singlePost(req.params.id);
   // let post = {
   //   title: req.body.title,
@@ -57,14 +56,17 @@ router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res) {
   let modPost = {
     title: req.body.newTitle,
     body: req.body.newBody,
-    id: req.body.id
+    id: req.session.post.post_id,
+    author: req.session.user.email
   }
+  console.log("post in POST modpost", modPost);
   const postNuovo = await data.updatePost(modPost);
   console.log(postNuovo[0]);
-  res.render('ok', { title: postNuovo[0].id });
+  return res.redirect('/profile');
+  // res.render('ok', { title: postNuovo[0].id });
 })
 
-router.post('/addPost', isLoggedIn, async function (req, res) {
+router.post('/addPost', isLoggedIn, async function (req, res, next) {
   console.log("Vorrei aggiungere post come...", req.session.user_email);
 
   let post = {
@@ -75,12 +77,18 @@ router.post('/addPost', isLoggedIn, async function (req, res) {
 
   console.log(post)
   let return__value = await data.addPost(post);
-  res.json(return__value);
-  // do somethings
+  // res.json(return__value);
+  return res.redirect('/profile');
 })
 
-router.get('/about', function (req, res) {
+router.get('/about', function (req, res, next) {
   res.send('Learn about us')
+})
+router.get('/profile', async function (req, res, next) {
+  let user = await data.getUserInfo(req.session.user_email);
+  let posts = await data.getUserPost(req.session.user_email);
+  console.log(posts)
+  res.render('profile', { user: user[0], posts: posts })
 })
 
 router.post('/signup', function (req, res, next) {
@@ -107,17 +115,24 @@ router.post('/login', async function (req, res, next) {
   console.log("Ciao", user)
   // if (err) return next(err);
   if (!user) return res.send('Not logged in!');
+  req.session.user = user;
   req.session.user_email = user.email;
   req.session.user_id = user.id;
-  res.send('Logged In!');
   console.log(req.session.user_id);
-  next()
+  return res.redirect('/profile');
 });
 
-router.get('/logout', isLoggedIn, function (req, res) {
+router.get('/logout', isLoggedIn, function (req, res, next) {
   req.session.user_email = null;
   req.session.user_id = null;
-
+  req.session.user = undefined;
+  return res.redirect('back');
+});
+router.get('/delete/:id', isLoggedIn, async function (req, res, next) {
+  let id = req.params.id;
+  console.log("Post da cancellare", id);
+  await data.deletePost(id);
+  return res.redirect('back');
 });
 
 // Middleware
