@@ -20,6 +20,11 @@ class db {
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };
+    this.getEmail = async (id) => {
+      const raw__query = `SELECT email  FROM users WHERE id = '${id}';`;
+      console.log("Full Query", raw__query);
+      return await raw(raw__query);
+    };
 
     this.users = async () => {
       const raw__query = `SELECT nickname FROM users`;
@@ -43,12 +48,12 @@ class db {
       return await raw(raw__query);
     };
     this.singlePost = async (id) => {
-      const raw__query = `SELECT title, body, posts.id FROM posts JOIN users on (posts.author = users.id) WHERE posts.id = '${id}'`;
+      const raw__query = `SELECT title, body, posts.id, author FROM posts JOIN users on (posts.author = users.id) WHERE posts.id = '${id}'`;
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };
     this.latest20Post = async (user) => {
-      const raw__query = `SELECT title, body, posts.id FROM posts ORDER BY id DESC LIMIT 20`;
+      const raw__query = `SELECT title, body, posts.id, author FROM posts ORDER BY id DESC LIMIT 20`;
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };

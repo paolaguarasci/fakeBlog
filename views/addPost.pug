@@ -1,0 +1,6 @@
+extends layout.pug
+block body
+  form(method='POST' action='/addPost')
+    textarea(name="title")= title
+    textarea(name="body")= body
+    button.btn.btn-primary(type='submit') Add

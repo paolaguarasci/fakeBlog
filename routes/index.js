@@ -12,43 +12,56 @@ router.use('/api', require('./api'))
 
 router.get('/', async function (req, res) {
   let return__value = await data.latest20Post();
+  // return_value.forEach(post => { post.author = await data.getEmail(post.author); });
+
+  for (let i in return__value) {
+    let email = await data.getEmail(return__value[i].author);
+    try {
+      return__value[i].author = email[0].email;
+    } catch (e) {
+      return__value[i].author = "User non registrato";
+      console.log('Error: user not found')
+    }
+  }
   console.log(return__value);
   res.render('home', { posts: return__value });
 })
 router.get('/login', function (req, res) {
-  res.sendFile(path.resolve('./login.html'));
+  res.render('login');
 })
 router.get('/addPost', isLoggedIn, function (req, res) {
-  res.sendFile(path.resolve('./addPost.html')); s
+  res.render('addPost');
 })
-router.get('/modPost/:id', async function (req, res) {
-  const post = await data.singlePost(req.params.id);
+router.get('/modPost/:id', isLoggedIn, async function (req, res) {
+  const p = await data.singlePost(req.params.id);
+  const m = await data.getEmail(p[0].author);
+  let post = {
+    title: p[0].title,
+    body: p[0].body,
+    post_id: p[0].id,
+    author: m[0].email
+  };
+  req.session.post = post;
+  console.log("post in get modpost", post);
+  res.render('modPost', post);
+})
+router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res) {
+  // const post = await data.singlePost(req.params.id);
   // let post = {
   //   title: req.body.title,
   //   body: req.body.body,
   //   post_id: req.param.id,
   //   author: req.session.user_id
   // };
-  console.log(post);
-  res.render('modPost', post[0]);
-})
-router.post('/modPost/', async function (req, res) {
-  const post = await data.singlePost(req.params.id);
-  // let post = {
-  //   title: req.body.title,
-  //   body: req.body.body,
-  //   post_id: req.param.id,
-  //   author: req.session.user_id
-  // };
-  console.log(req.body);
+  console.log("body: ", req.body);
   let modPost = {
     title: req.body.newTitle,
     body: req.body.newBody,
     id: req.body.id
   }
   const postNuovo = await data.updatePost(modPost);
-  console.log(postNuovo);
-  res.render('ok', { title: postNuovo.id });
+  console.log(postNuovo[0]);
+  res.render('ok', { title: postNuovo[0].id });
 })
 
 router.post('/addPost', isLoggedIn, async function (req, res) {
@@ -109,9 +122,20 @@ router.get('/logout', isLoggedIn, function (req, res) {
 
 // Middleware
 function isLoggedIn(req, res, next) {
-  req.body.author = req.session.user;
+  // console.log("body: ", req.body);
+
   if (!(req.session && req.session.user_email)) {
     return res.send('Not logged in!');
+  }
+
+  next();
+}
+
+function isAuthor(req, res, next) {
+  console.log("req in isAuth: ", req.body);
+  if (req.session.user_email != req.session.post.author) {
+    console.log(req.session.user_email, req.body.author)
+    return res.send("You can't mod this post!!!");
   }
   next();
 }

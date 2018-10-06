@@ -5,11 +5,10 @@
 - read latest 20 post in homepage
 - login using form http://localhost:4000/login
 - add post as logged user at http://localhost:4000/addPost
--
+- make modPost.html for update posts
 
 ### TODO
 - make profile.html with only users logged post and info
-- make modPost.html for update posts
 - make interface with some button (delete, update...)
 - make registration.html
 

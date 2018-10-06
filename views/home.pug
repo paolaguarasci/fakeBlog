@@ -4,3 +4,4 @@ block body
 		each post in posts
 				a(href= '/modpost/'+post.id )= post.title
 				p= post.body
+					em= post.author
