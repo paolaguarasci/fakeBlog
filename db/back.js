@@ -81,7 +81,7 @@ class db {
     };
     this.addUser = async (user) => {
       // TODO inserire un ritorno che indichi lo stato delle cose
-      const raw__query = `INSERT INTO users VALUES('${user.nickname}', '${user.email}', '${user.password}');`;
+      const raw__query = `INSERT INTO users VALUES('${user.nickname}', '${user.email}', '${user.password}') RETURNING *;`;
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };

@@ -28,6 +28,14 @@ router.get('/', async function (req, res, next) {
 router.get('/login', function (req, res, next) {
   res.render('login');
 })
+router.get('/registration', function (req, res, next) {
+  if (req.session.user_email == null) {
+    console.log("Registrazione di", req.body);
+    res.render('registration');
+  } else {
+    res.redirect('back')
+  }
+})
 router.get('/addPost', isLoggedIn, function (req, res, next) {
   res.render('addPost');
 })
@@ -91,19 +99,27 @@ router.get('/profile', async function (req, res, next) {
   res.render('profile', { user: user[0], posts: posts })
 })
 
-router.post('/signup', function (req, res, next) {
-  var user = {
-    Name: req.body.name,
-    Email: req.body.email,
-    Pass: req.body.pass,
-    Num: req.body.num
+router.post('/signup', async function (req, res, next) {
+  if (req.body.pass1 != req.body.pass2) {
+    res.send("Error");
+    return res.redirect("..");
+  }
+  const user = {
+    nickname: req.body.nickname,
+    email: req.body.email,
+    password: req.body.pass1
   };
-  var UserReg = mongoose.model('UserReg', RegSchema);
-  UserReg.create(user, function (err, newUser) {
-    if (err) return next(err);
-    req.session.user_email = email;
-    return res.send('Logged In!');
-  });
+  console.log(user)
+  const UserReg = await data.addUser(user);
+  if (UserReg == undefined) {
+    return res.send("Errore");
+  } else {
+    // console.log("signup ", UserReg[0].email)
+    req.session.user_email = UserReg[0].email;
+    req.session.user_id = UserReg[0].id;
+    req.session.user = UserReg[0];
+    return res.redirect('/profile')
+  }
 });
 
 router.post('/login', async function (req, res, next) {
