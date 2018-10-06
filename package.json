@@ -1,7 +1,7 @@
 {
   "name": "fakeblog",
   "version": "0.0.1",
-  "description": "A Fake cmdline Blog with CRUD and registration user",
+  "description": "A Fake blog with CRUD and registration user",
   "main": "app.js",
   "scripts": {
     "test": "snyk test && jest"
@@ -22,7 +22,8 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "pug": "^2.0.3"
   },
   "devDependencies": {
     "snyk": "^1.99.1"

@@ -1,0 +1,7 @@
+extends layout.pug
+block body
+  form(method='POST' action='/modPost')
+    textarea(name="newTitle")= title
+    textarea(name="newBody")= body
+    input(type='text', name="id", placeholder=id)
+    button.btn.btn-primary(type='submit') Update

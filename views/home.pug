@@ -1,0 +1,6 @@
+extends layout.pug
+block body
+	ul
+		each post in posts
+				a(href= '/modpost/'+post.id )= post.title
+				p= post.body

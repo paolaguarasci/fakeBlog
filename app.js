@@ -5,7 +5,7 @@ const session = require('express-session');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.set('view engine', 'pug');
 
 // Use the session middleware
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }))

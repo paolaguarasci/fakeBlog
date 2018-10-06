@@ -42,6 +42,11 @@ class db {
       console.log("Full Query", raw__query);
       return await raw(raw__query);
     };
+    this.singlePost = async (id) => {
+      const raw__query = `SELECT title, body, posts.id FROM posts JOIN users on (posts.author = users.id) WHERE posts.id = '${id}'`;
+      console.log("Full Query", raw__query);
+      return await raw(raw__query);
+    };
     this.latest20Post = async (user) => {
       const raw__query = `SELECT title, body, posts.id FROM posts ORDER BY id DESC LIMIT 20`;
       console.log("Full Query", raw__query);

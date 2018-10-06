@@ -12,14 +12,45 @@ router.use('/api', require('./api'))
 
 router.get('/', async function (req, res) {
   let return__value = await data.latest20Post();
-  res.json(return__value);
+  console.log(return__value);
+  res.render('home', { posts: return__value });
 })
 router.get('/login', function (req, res) {
   res.sendFile(path.resolve('./login.html'));
 })
 router.get('/addPost', isLoggedIn, function (req, res) {
-  res.sendFile(path.resolve('./addPost.html'));
+  res.sendFile(path.resolve('./addPost.html')); s
 })
+router.get('/modPost/:id', async function (req, res) {
+  const post = await data.singlePost(req.params.id);
+  // let post = {
+  //   title: req.body.title,
+  //   body: req.body.body,
+  //   post_id: req.param.id,
+  //   author: req.session.user_id
+  // };
+  console.log(post);
+  res.render('modPost', post[0]);
+})
+router.post('/modPost/', async function (req, res) {
+  const post = await data.singlePost(req.params.id);
+  // let post = {
+  //   title: req.body.title,
+  //   body: req.body.body,
+  //   post_id: req.param.id,
+  //   author: req.session.user_id
+  // };
+  console.log(req.body);
+  let modPost = {
+    title: req.body.newTitle,
+    body: req.body.newBody,
+    id: req.body.id
+  }
+  const postNuovo = await data.updatePost(modPost);
+  console.log(postNuovo);
+  res.render('ok', { title: postNuovo.id });
+})
+
 router.post('/addPost', isLoggedIn, async function (req, res) {
   console.log("Vorrei aggiungere post come...", req.session.user_email);
 
