@@ -6,6 +6,10 @@ ignore:
     - gulp > glob-watcher > chokidar > fsevents > node-pre-gyp > tar > chownr:
         reason: test
         expires: '2018-11-05T16:13:21.887Z'
+  'npm:shelljs:20140723':
+    - jshint > shelljs:
+        reason: None given
+        expires: '2018-11-06T04:39:39.438Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:minimatch:20160620':

@@ -40,17 +40,19 @@ router.get('/addPost', isLoggedIn, function (req, res, next) {
   res.render('addPost');
 })
 router.get('/modPost/:id', isLoggedIn, async function (req, res, next) {
-  const p = await data.singlePost(req.params.id);
-  const m = await data.getEmail(p[0].author);
-  let post = {
-    title: p[0].title,
-    body: p[0].body,
-    post_id: p[0].id,
-    author: m[0].email
-  };
-  req.session.post = post;
-  console.log("post in get modpost", post);
-  res.render('modPost', post);
+  if (req.session.post == null) {
+    const p = await data.singlePost(req.params.id);
+    const m = await data.getEmail(p[0].author);
+    let post = {
+      title: p[0].title,
+      body: p[0].body,
+      post_id: p[0].id,
+      author: m[0].email
+    };
+    req.session.post = post;
+  }
+  console.log("post in get modpost", req.session.post);
+  res.render('modPost', req.session.post);
 })
 router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res, next) {
   // const post = await data.singlePost(req.params.id);
@@ -69,6 +71,7 @@ router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res, next) {
   }
   console.log("post in POST modpost", modPost);
   const postNuovo = await data.updatePost(modPost);
+  req.session.post = null;
   console.log(postNuovo[0]);
   return res.redirect('/profile');
   // res.render('ok', { title: postNuovo[0].id });
