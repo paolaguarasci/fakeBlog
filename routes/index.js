@@ -74,7 +74,7 @@ router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res, next) {
   req.session.post = null;
   console.log(postNuovo[0]);
   return res.redirect('/profile');
-  // res.render('ok', { title: postNuovo[0].id });
+  // res.render('ok', { title: postNovo[0].id });
 })
 
 router.post('/addPost', isLoggedIn, async function (req, res, next) {
@@ -95,7 +95,7 @@ router.post('/addPost', isLoggedIn, async function (req, res, next) {
 router.get('/about', function (req, res, next) {
   res.send('Learn about us')
 })
-router.get('/profile', async function (req, res, next) {
+router.get('/profile', isLoggedIn, async function (req, res, next) {
   let user = await data.getUserInfo(req.session.user_email);
   let posts = await data.getUserPost(req.session.user_email);
   console.log(posts)
@@ -104,8 +104,8 @@ router.get('/profile', async function (req, res, next) {
 
 router.post('/signup', async function (req, res, next) {
   if (req.body.pass1 != req.body.pass2) {
-    res.send("Error");
-    return res.redirect("..");
+    // res.send("Error");
+    return res.render('home', { error: true });
   }
   const user = {
     nickname: req.body.nickname,
@@ -138,7 +138,7 @@ router.post('/login', async function (req, res, next) {
   req.session.user_email = user.email;
   req.session.user_id = user.id;
   console.log(req.session.user_id);
-  return res.redirect('/profile');
+  return res.redirect('..');
 });
 
 router.get('/logout', isLoggedIn, function (req, res, next) {
@@ -159,7 +159,7 @@ function isLoggedIn(req, res, next) {
   // console.log("body: ", req.body);
 
   if (!(req.session && req.session.user_email)) {
-    return res.send('Not logged in!');
+    return res.redirect('/login');
   }
 
   next();

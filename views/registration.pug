@@ -1,8 +1,23 @@
 extends layout.pug
+block append styles
+  link(href='signin.css' rel='stylesheet')
+block nav
+
 block body
-  form(method='POST' action="/signup")
-    input(type='text', name="nickname", placeholder="nickname")
-    input(type='text', name="email", placeholder="email")
-    input(type='password', name="pass1", placeholder="password")
-    input(type='password', name="pass2", placeholder="another")
-    button.btn.btn-primary(type='submit') SigUp
+  form.form-signin(method='POST' action="/signup")
+    img.mb-4(src='img/bootstrap.svg' alt='' width='72' height='72')
+    h1.h3.mb-3.font-weight-normal Please sign up
+    label.sr-only(for='inputName') Full Name
+    input#inputName.form-control(type='text', name="nickname", placeholder='Full Name' required autofocus)
+    label.sr-only(for='inputEmail') Email address
+    input#inputEmail.form-control(type='email', name="email", placeholder='Email address' required autofocus)
+    label.sr-only(for='inputPassword') Password
+    input#inputPassword.form-control(type='password', name="pass1", placeholder='Password' required)
+    label.sr-only(for='inputPasswordRetype') Retype password
+    input#inputPasswordRetype.form-control(type='password', name="pass2", placeholder='Retype password' required)
+    .checkbox.mb-3
+      label
+        input(type='checkbox' value='remember-me')
+        |  Remember me
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign up
+    p.mt-5.mb-3.text-muted &copy; 2017-2018
