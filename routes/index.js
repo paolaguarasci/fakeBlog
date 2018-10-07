@@ -2,8 +2,8 @@ const db = require('../db');
 const express = require('express');
 const router = express.Router();
 const data = new db();
-const session = require('express-session');
-const request = require('request');
+// const session = require('express-session');
+// const request = require('request');
 
 
 router.use('/api', require('./api'))
@@ -134,7 +134,7 @@ router.post('/login', async function (req, res, next) {
   const user = await data.findOne({ Email: email, Pass: pass });
   console.log("Ciao", user)
   // if (err) return next(err);
-  if (!user) return res.send('Not logged in!');
+  if (!user) return res.render('login');
   req.session.user = user;
   req.session.user_email = user.email;
   req.session.user_id = user.id;
@@ -170,7 +170,7 @@ function isAuthor(req, res, next) {
   console.log("req in isAuth: ", req.body);
   if (req.session.user_email != req.session.post.author) {
     console.log(req.session.user_email, req.body.author)
-    return res.send("You can't mod this post!!!");
+    return res.render('error', { msg: "You can't mod this post!!!" });
   }
   next();
 }

@@ -1,6 +1,8 @@
 extends layout.pug
 block body
   form(method='POST' action='/modPost')
-    textarea(name="newTitle")= title
-    textarea(name="newBody")= body
+    .form-group
+      input.form-control.form-control-lg(name="newTitle", type='text')
+      |
+      textarea.form-control.form-control-lg(name='newBody')
     button.btn.btn-primary(type='submit') Update

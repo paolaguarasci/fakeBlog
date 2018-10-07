@@ -1,6 +1,8 @@
 extends layout.pug
 block body
   form(method='POST' action='/addPost')
-    textarea(name="title")= title
-    textarea(name="body")= body
+    .form-group
+      input.form-control.form-control-lg(name="title", type='text', placeholder='Title')
+      |
+      textarea.form-control.form-control-lg(name='body', placeholder='Body')
     button.btn.btn-primary(type='submit') Add
