@@ -16,8 +16,10 @@ The main components are: **Node**, **Express** (with session and router) and **P
 
 ### TODO
 - make editable user info
-- make interface more usable 🤔
-- make registration.html
+- ~~make profile.html with only users logged post and info~~
+- ~~make modPost.html for update posts~~
+- ~~make interface with some button (delete, update...)~~ 🤔
+- ~~make registration.html~~
 
 ### Maybe one day...
 - Security policy
