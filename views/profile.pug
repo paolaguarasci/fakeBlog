@@ -2,8 +2,6 @@ extends layout.pug
 block body
   if user != undefined
     h1= "Profilo di " + user.nickname + ", " + user.email
-    p
-      a(href="/addPost") Add Post
     .posts
       each post in posts
         .post__header
@@ -12,13 +10,3 @@ block body
           a.badge.badge-primary(href="/delete/" + post.id) Delete
         .post__body
           p= post.body
-  else
-    a(href="/login") login
-  p
-    a.btn.btn-primary(data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample')
-      | Link with href
-    button.btn.btn-primary(type='button' data-toggle='collapse' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample')
-      | Button with data-target
-  #collapseExample.collapse
-    .card.card-body
-      | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.

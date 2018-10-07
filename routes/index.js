@@ -23,6 +23,7 @@ router.get('/', async function (req, res, next) {
     }
   }
   console.log("Utente in sessione: ", req.session.user);
+
   res.render('home', { posts: return__value, user: req.session.user });
 })
 router.get('/login', function (req, res, next) {
