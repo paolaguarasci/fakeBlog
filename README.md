@@ -7,10 +7,10 @@ The main components are: **Node**, **Express** (with session and router) and **P
 
 ### What can i do (now)?
 - ✅ read latest 20 post in homepage
-- ✅ login using form http://localhost:4000/login
-- ✅ add post as logged user at http://localhost:4000/addPost
-- ✅ update posts as logged user
-- ✅ view my post as logged user
+- ✅ login using form
+- ✅ add post as logged user
+- ✅ update my posts as logged user
+- ✅ view only my post as logged user
 - ✅ click buttons to delete or mod post
 - ✅ signup into platform using registration form
 - ✅ change my user information
@@ -24,6 +24,7 @@ The main components are: **Node**, **Express** (with session and router) and **P
 - Ajax for better user exp
 - Cookie? I want to save session
 - Check data on client side (like form validation)
+- Refactoring follow MVC style
 
 ### Maybe one day...
 - Security policy
