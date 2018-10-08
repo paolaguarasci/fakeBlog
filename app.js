@@ -16,6 +16,17 @@ app.use(session({
   saveUninitialized: true
 }));
 
+
+app.response.message = function (msg) {
+  // reference `req.session` via the `this.req` reference
+  var sess = this.req.session;
+  // simply add the msg to an array for later
+  sess.messages = sess.messages || [];
+  sess.messages.push(msg);
+  return this;
+};
+
+
 app.use(require('./routes'));
 app.use(express.static(path.join(__dirname, 'public')))
 
