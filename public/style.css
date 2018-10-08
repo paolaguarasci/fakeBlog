@@ -1,3 +1,36 @@
 html, body {
-  background: lightskyblue;
+  background: #eeeeee;
+}
+.post {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 15px;
+  padding: 5px;
+  border: 0.5px #aaa solid;
+  width: 100%;
+}
+
+.post_head{
+display: grid;
+grid-template-columns: 1fr auto;
+}
+.post_head > a {
+  line-height: 0;
+}
+.auth {
+font-size: 1.2rem;
+color: #aaa;
+}
+
+.body {
+  font-size: 2rem;
+}
+.title {
+  font-size: 3rem;
+}
+.icons{
+  /* border: 1px solid black; */
+  height: 22px;
+  align-self: right;
+  justify-self: baseline;
 }

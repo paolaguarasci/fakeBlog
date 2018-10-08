@@ -2,7 +2,7 @@ extends layout.pug
 block body
   form(method='POST' action='/modPost')
     .form-group
-      input.form-control.form-control-lg(name="newTitle", type='text')
+      input.form-control.form-control-lg(name="newTitle", type='text', value= post.title)
       |
-      textarea.form-control.form-control-lg(name='newBody')
+      textarea.form-control.form-control-lg(name='newBody')= post.body
     button.btn.btn-primary(type='submit') Update

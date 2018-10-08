@@ -2,17 +2,18 @@ extends layout.pug
 
 block body
   #home
-  ul
-    each post in posts
-        hr
-        h3= post.title
-        p= post.body
-        p
-          em= post.author
-        if user != undefined && user.email == post.author
-          a(href="/modpost/" + post.id) ↪️
-          a(href="/delete/" + post.id) ❌
-  if error
-    .alert.alert-primary(role='alert') Error
-    button.close(type='button' data-dismiss='alert' aria-label='Close')
-      span(aria-hidden='true') &times;
+    ul.posts
+      each post in posts
+        li.post
+          .post_head
+            h3.title= post.title
+            if user != undefined && user.email == post.author
+              .icons
+                a(data-idnum=post.id, href="/modpost/" + post.id) ↪️
+                a(href="/delete/" + post.id) ❌
+          p.body= post.body
+          p.auth
+            em= post.author
+
+block append scripts
+  script(src="/home.js")
