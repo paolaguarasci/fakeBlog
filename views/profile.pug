@@ -1,7 +1,9 @@
 extends layout.pug
 block body
   if user != undefined
-    h1= "Profilo di " + user.nickname + ", " + user.email
+    h1= user.nickname
+    |
+    a(href="/editUser/") Edit profile
     .posts
       each post in posts
         .post__header
