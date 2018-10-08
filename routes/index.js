@@ -2,16 +2,11 @@ const db = require('../db');
 const express = require('express');
 const router = express.Router();
 const data = new db();
-// const session = require('express-session');
-// const request = require('request');
-
-
+const crypto = require('crypto');
 router.use('/api', require('./api'))
-// router.use('/cars', require('./cars'))
 
 router.get('/', async function (req, res, next) {
   let return__value = await data.latest20Post();
-  // return_value.forEach(post => { post.author = await data.getEmail(post.author); });
 
   for (let i in return__value) {
     let email = await data.getEmail(return__value[i].author);
@@ -56,13 +51,6 @@ router.get('/modPost/:id', isLoggedIn, async function (req, res, next) {
   res.render('modPost', req.session.post);
 })
 router.post('/modPost/', isLoggedIn, isAuthor, async function (req, res, next) {
-  // const post = await data.singlePost(req.params.id);
-  // let post = {
-  //   title: req.body.title,
-  //   body: req.body.body,
-  //   post_id: req.param.id,
-  //   author: req.session.user_id
-  // };
   console.log("body: ", req.body);
   let modPost = {
     title: req.body.newTitle,
@@ -107,15 +95,10 @@ router.get('/editUser', isLoggedIn, async function (req, res, next) {
   res.render('editUser', { user: user[0] })
 })
 router.post('/editUser', isLoggedIn, async function (req, res, next) {
-  console.log("New user nickname: ", req.body.nickname)
-  console.log("New user email: ", req.body.email)
-  console.log("New user pass1: ", req.body.pass1)
-  console.log("New user pass2: ", req.body.pass2)
-
   let asd = {
     nickname: req.body.nickname,
     email: req.body.email,
-    password: req.body.pass1,
+    password: getHash(req.body.pass1),
     id: req.session.user_id
   };
 
@@ -132,7 +115,7 @@ router.post('/signup', async function (req, res, next) {
   const user = {
     nickname: req.body.nickname,
     email: req.body.email,
-    password: req.body.pass1
+    password: getHash(req.body.pass1)
   };
   console.log(user)
   const UserReg = await data.addUser(user);
@@ -150,12 +133,11 @@ router.post('/signup', async function (req, res, next) {
 router.post('/login', async function (req, res, next) {
   // console.log(req.params[0]);
   let email = req.body.email;
-  let pass = req.body.pass;
-  // console.log(req.body)
-  const user = await data.findOne({ Email: email, Pass: pass });
+  let pass = getHash(req.body.pass);
+  const user = await data.findOne({ Email: email });
+  console.log(req.body.pass, pass, user.password)
+  if (!user || user.password != pass) return res.render('login');
   console.log("Ciao", user)
-  // if (err) return next(err);
-  if (!user) return res.render('login');
   req.session.user = user;
   req.session.user_email = user.email;
   req.session.user_id = user.id;
@@ -196,4 +178,7 @@ function isAuthor(req, res, next) {
   next();
 }
 
+function getHash(str) {
+  return crypto.createHash('sha1').update(str).digest('hex');
+}
 module.exports = router

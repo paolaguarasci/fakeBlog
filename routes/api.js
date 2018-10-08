@@ -7,10 +7,7 @@ router.get('/posts/', isLoggedIn, async function (req, res) {
   let return__value = await data.post(req.session.user_id);
   res.json(return__value);
 });
-// router.get('/posts/', isLoggedIn, async function (req, res) {
-//   let return__value = await data.latest20Post();
-//   res.json(return__value);
-// });
+
 router.post('/posts/', isLoggedIn, async function (req, res) {
   let post = {
     title: req.body.title,

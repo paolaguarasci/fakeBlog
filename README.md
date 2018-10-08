@@ -13,13 +13,18 @@ The main components are: **Node**, **Express** (with session and router) and **P
 - ✅ view my post as logged user
 - ✅ click buttons to delete or mod post
 - ✅ signup into platform using registration form
+- ✅ change my user information
 
 ### TODO
-- make editable user info
+- ~~make editable user info~~
 - ~~make profile.html with only users logged post and info~~
 - ~~make modPost.html for update posts~~
 - ~~make interface with some button (delete, update...)~~ 🤔
 - ~~make registration.html~~
+- Ajax for better user exp
+- Cookie? I want to save session
+- Check data on client side (like form validation)
 
 ### Maybe one day...
 - Security policy
+  ✅ now in db is stored only hash string

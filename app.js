@@ -10,9 +10,17 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
-app.use(session({ secret: process.env.secret }))
+app.use(session({
+  secret: process.env.secret,
+  resave: true,
+  saveUninitialized: true
+}));
+
 app.use(require('./routes'));
 app.use(express.static(path.join(__dirname, 'public')))
+
+
+
 
 // Start
 app.listen(4000);

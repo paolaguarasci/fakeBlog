@@ -38,7 +38,7 @@ class db {
     };
     this.findOne = async (key) => {
       console.log(key)
-      const raw__query = `SELECT * FROM users WHERE email='${key.Email}' AND password='${key.Pass}';`;
+      const raw__query = `SELECT * FROM users WHERE email='${key.Email}';`;
       console.log("Full Query", raw__query);
       const user = await raw(raw__query);
       // if (!user) return new Error('User not found');
