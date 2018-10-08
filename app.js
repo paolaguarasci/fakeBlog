@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+dotenv.config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -8,7 +10,7 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }))
+app.use(session({ secret: process.env.secret }))
 app.use(require('./routes'));
 app.use(express.static(path.join(__dirname, 'public')))
 

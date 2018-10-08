@@ -102,6 +102,27 @@ router.get('/profile', isLoggedIn, async function (req, res, next) {
   console.log(posts)
   res.render('profile', { user: user[0], posts: posts })
 })
+router.get('/editUser', isLoggedIn, async function (req, res, next) {
+  let user = await data.getUserInfo(req.session.user_email);
+  res.render('editUser', { user: user[0] })
+})
+router.post('/editUser', isLoggedIn, async function (req, res, next) {
+  console.log("New user nickname: ", req.body.nickname)
+  console.log("New user email: ", req.body.email)
+  console.log("New user pass1: ", req.body.pass1)
+  console.log("New user pass2: ", req.body.pass2)
+
+  let asd = {
+    nickname: req.body.nickname,
+    email: req.body.email,
+    password: req.body.pass1,
+    id: req.session.user_id
+  };
+
+  const newUser = await data.updateUser(asd);
+  let user = await data.getUserInfo(req.session.user_email);
+  res.render('editUser', { user: user[0] })
+})
 
 router.post('/signup', async function (req, res, next) {
   if (req.body.pass1 != req.body.pass2) {
